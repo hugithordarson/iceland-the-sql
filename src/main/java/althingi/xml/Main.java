@@ -19,9 +19,9 @@ public class Main {
 	public static void main( String[] args ) {
 
 		// importÞingflokkar( XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Result.class ) );
-		// importNefndir( XMLUtil.urlToResult( Sources.URL_NEFNDIR, ImportNefndir.Result.class ) );
-		// importNefndarmenn( XMLUtil.urlToResult( Sources.URL_NEFNDARMENN, ImportNefndarmenn.Result.class ) );
+		importNefndir( XMLUtil.urlToResult( Sources.URL_NEFNDIR, ImportNefndir.Result.class ) );
 		importÞingmenn( XMLUtil.urlToResult( Sources.URL_ÞINGMENN, ImportÞingmenn.Result.class ) );
+		importNefndarmenn( XMLUtil.urlToResult( Sources.URL_NEFNDARMENN, ImportNefndarmenn.Result.class ) );
 
 		List<Committee> list = ObjectSelect
 				.query( Committee.class )
@@ -50,7 +50,7 @@ public class Main {
 		result.nefndir.forEach( in -> {
 			System.out.println( in.heiti );
 			in.nefndarmenn.forEach( p -> {
-				System.out.println( " - " + p.nafn );
+
 			} );
 		} );
 

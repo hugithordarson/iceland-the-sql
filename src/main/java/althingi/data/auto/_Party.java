@@ -28,7 +28,7 @@ public abstract class _Party extends BaseDataObject {
     public static final Property<LocalDateTime> MODIFICATION_DATE = Property.create("modificationDate", LocalDateTime.class);
     public static final Property<String> NAME = Property.create("name", String.class);
     public static final Property<Long> ORIGINAL_ID = Property.create("originalID", Long.class);
-    public static final Property<String> UNIQUE_ID = Property.create("uniqueId", String.class);
+    public static final Property<String> UNIQUE_ID = Property.create("uniqueID", String.class);
 
     protected String abbreviationLong;
     protected String abbreviationShort;
@@ -38,7 +38,7 @@ public abstract class _Party extends BaseDataObject {
     protected LocalDateTime modificationDate;
     protected String name;
     protected Long originalID;
-    protected String uniqueId;
+    protected String uniqueID;
 
 
     public void setAbbreviationLong(String abbreviationLong) {
@@ -121,14 +121,14 @@ public abstract class _Party extends BaseDataObject {
         return this.originalID;
     }
 
-    public void setUniqueId(String uniqueId) {
-        beforePropertyWrite("uniqueId", this.uniqueId, uniqueId);
-        this.uniqueId = uniqueId;
+    public void setUniqueID(String uniqueID) {
+        beforePropertyWrite("uniqueID", this.uniqueID, uniqueID);
+        this.uniqueID = uniqueID;
     }
 
-    public String getUniqueId() {
-        beforePropertyRead("uniqueId");
-        return this.uniqueId;
+    public String getUniqueID() {
+        beforePropertyRead("uniqueID");
+        return this.uniqueID;
     }
 
     @Override
@@ -154,8 +154,8 @@ public abstract class _Party extends BaseDataObject {
                 return this.name;
             case "originalID":
                 return this.originalID;
-            case "uniqueId":
-                return this.uniqueId;
+            case "uniqueID":
+                return this.uniqueID;
             default:
                 return super.readPropertyDirectly(propName);
         }
@@ -192,8 +192,8 @@ public abstract class _Party extends BaseDataObject {
             case "originalID":
                 this.originalID = (Long)val;
                 break;
-            case "uniqueId":
-                this.uniqueId = (String)val;
+            case "uniqueID":
+                this.uniqueID = (String)val;
                 break;
             default:
                 super.writePropertyDirectly(propName, val);
@@ -219,7 +219,7 @@ public abstract class _Party extends BaseDataObject {
         out.writeObject(this.modificationDate);
         out.writeObject(this.name);
         out.writeObject(this.originalID);
-        out.writeObject(this.uniqueId);
+        out.writeObject(this.uniqueID);
     }
 
     @Override
@@ -233,7 +233,7 @@ public abstract class _Party extends BaseDataObject {
         this.modificationDate = (LocalDateTime)in.readObject();
         this.name = (String)in.readObject();
         this.originalID = (Long)in.readObject();
-        this.uniqueId = (String)in.readObject();
+        this.uniqueID = (String)in.readObject();
     }
 
 }
