@@ -4,15 +4,6 @@
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/10/modelMap http://cayenne.apache.org/schema/10/modelMap.xsd"
 	 project-version="10">
 	<property name="defaultPackage" value="althingi.data"/>
-	<db-entity name="committe_membership">
-		<db-attribute name="committee_id" type="BIGINT"/>
-		<db-attribute name="creation_date" type="TIMESTAMP"/>
-		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isMandatory="true"/>
-		<db-attribute name="modification_date" type="TIMESTAMP"/>
-		<db-attribute name="person_id" type="BIGINT"/>
-		<db-attribute name="status" type="CLOB"/>
-		<db-attribute name="unique_id" type="CLOB"/>
-	</db-entity>
 	<db-entity name="committee">
 		<db-attribute name="abbreviation_long" type="CLOB"/>
 		<db-attribute name="abbreviation_short" type="CLOB"/>
@@ -23,6 +14,17 @@
 		<db-attribute name="modification_date" type="TIMESTAMP"/>
 		<db-attribute name="name" type="CLOB"/>
 		<db-attribute name="original_id" type="BIGINT"/>
+		<db-attribute name="unique_id" type="CLOB"/>
+	</db-entity>
+	<db-entity name="committee_membership">
+		<db-attribute name="committee_id" type="BIGINT"/>
+		<db-attribute name="creation_date" type="TIMESTAMP"/>
+		<db-attribute name="date_from" type="DATE"/>
+		<db-attribute name="date_to" type="DATE"/>
+		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="modification_date" type="TIMESTAMP"/>
+		<db-attribute name="person_id" type="BIGINT"/>
+		<db-attribute name="status" type="CLOB"/>
 		<db-attribute name="unique_id" type="CLOB"/>
 	</db-entity>
 	<db-entity name="party">
@@ -43,23 +45,26 @@
 		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="modification_date" type="TIMESTAMP"/>
 		<db-attribute name="name" type="CLOB"/>
+		<db-attribute name="original_id" type="BIGINT"/>
 		<db-attribute name="unique_id" type="CLOB"/>
 	</db-entity>
-	<obj-entity name="CommitteMembership" className="althingi.data.CommitteMembership" dbEntityName="committe_membership">
-		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
-		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
-		<obj-attribute name="status" type="java.lang.String" db-attribute-path="status"/>
-		<obj-attribute name="uniqueID" type="java.lang.String" db-attribute-path="unique_id"/>
-	</obj-entity>
 	<obj-entity name="Committee" className="althingi.data.Committee" dbEntityName="committee">
 		<obj-attribute name="abbreviationLong" type="java.lang.String" db-attribute-path="abbreviation_long"/>
 		<obj-attribute name="abbreviationShort" type="java.lang.String" db-attribute-path="abbreviation_short"/>
 		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
-		<obj-attribute name="firstParliamentNumber" type="long" db-attribute-path="first_parliament_number"/>
-		<obj-attribute name="lastParliamentNumber" type="long" db-attribute-path="last_parliament_number"/>
+		<obj-attribute name="firstParliamentNumber" type="java.lang.Long" db-attribute-path="first_parliament_number"/>
+		<obj-attribute name="lastParliamentNumber" type="java.lang.Long" db-attribute-path="last_parliament_number"/>
 		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
-		<obj-attribute name="originalID" type="long" db-attribute-path="original_id"/>
+		<obj-attribute name="originalID" type="java.lang.Long" db-attribute-path="original_id"/>
+		<obj-attribute name="uniqueID" type="java.lang.String" db-attribute-path="unique_id"/>
+	</obj-entity>
+	<obj-entity name="CommitteeMembership" className="althingi.data.CommitteeMembership" dbEntityName="committee_membership">
+		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
+		<obj-attribute name="dateFrom" type="java.time.LocalDate" db-attribute-path="date_from"/>
+		<obj-attribute name="dateTo" type="java.time.LocalDate" db-attribute-path="date_to"/>
+		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
+		<obj-attribute name="status" type="java.lang.String" db-attribute-path="status"/>
 		<obj-attribute name="uniqueID" type="java.lang.String" db-attribute-path="unique_id"/>
 	</obj-entity>
 	<obj-entity name="Party" className="althingi.data.Party" dbEntityName="party">
@@ -78,22 +83,23 @@
 		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
 		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="originalID" type="java.lang.Long" db-attribute-path="original_id"/>
 		<obj-attribute name="uniqueID" type="java.lang.String" db-attribute-path="unique_id"/>
 	</obj-entity>
-	<db-relationship name="committee" source="committe_membership" target="committee">
-		<db-attribute-pair source="committee_id" target="id"/>
-	</db-relationship>
-	<db-relationship name="person" source="committe_membership" target="person">
-		<db-attribute-pair source="person_id" target="id"/>
-	</db-relationship>
-	<db-relationship name="committee_memberships" source="committee" target="committe_membership" toMany="true">
+	<db-relationship name="committee_memberships" source="committee" target="committee_membership" toMany="true">
 		<db-attribute-pair source="id" target="committee_id"/>
 	</db-relationship>
-	<db-relationship name="commitee_memberships" source="person" target="committe_membership" toMany="true">
+	<db-relationship name="committee" source="committee_membership" target="committee">
+		<db-attribute-pair source="committee_id" target="id"/>
+	</db-relationship>
+	<db-relationship name="person" source="committee_membership" target="person">
+		<db-attribute-pair source="person_id" target="id"/>
+	</db-relationship>
+	<db-relationship name="commitee_memberships" source="person" target="committee_membership" toMany="true">
 		<db-attribute-pair source="id" target="person_id"/>
 	</db-relationship>
-	<obj-relationship name="committee" source="CommitteMembership" target="Committee" deleteRule="Nullify" db-relationship-path="committee"/>
-	<obj-relationship name="person" source="CommitteMembership" target="Person" deleteRule="Nullify" db-relationship-path="person"/>
-	<obj-relationship name="committeeMemberships" source="Committee" target="CommitteMembership" deleteRule="Deny" db-relationship-path="committee_memberships"/>
-	<obj-relationship name="commiteeMemberships" source="Person" target="CommitteMembership" deleteRule="Deny" db-relationship-path="commitee_memberships"/>
+	<obj-relationship name="committeeMemberships" source="Committee" target="CommitteeMembership" deleteRule="Deny" db-relationship-path="committee_memberships"/>
+	<obj-relationship name="committee" source="CommitteeMembership" target="Committee" deleteRule="Nullify" db-relationship-path="committee"/>
+	<obj-relationship name="person" source="CommitteeMembership" target="Person" deleteRule="Nullify" db-relationship-path="person"/>
+	<obj-relationship name="commiteeMemberships" source="Person" target="CommitteeMembership" deleteRule="Deny" db-relationship-path="commitee_memberships"/>
 </data-map>

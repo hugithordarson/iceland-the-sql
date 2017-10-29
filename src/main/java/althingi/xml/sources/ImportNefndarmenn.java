@@ -20,6 +20,9 @@ public class ImportNefndarmenn {
 		public List<Nefnd> nefndir = new ArrayList<>();
 
 		public static class Nefnd {
+			@XmlAttribute
+			public Long id;
+
 			public String heiti;
 
 			@XmlElement( name = "nefndarmaður" )

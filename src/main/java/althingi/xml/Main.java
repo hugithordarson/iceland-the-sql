@@ -6,6 +6,7 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.ObjectSelect;
 
 import althingi.data.Committee;
+import althingi.data.CommitteeMembership;
 import althingi.data.Party;
 import althingi.data.Person;
 import althingi.db.Core;
@@ -18,17 +19,17 @@ public class Main {
 
 	public static void main( String[] args ) {
 
-		// importÞingflokkar( XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Result.class ) );
+		importÞingflokkar( XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Result.class ) );
 		importNefndir( XMLUtil.urlToResult( Sources.URL_NEFNDIR, ImportNefndir.Result.class ) );
 		importÞingmenn( XMLUtil.urlToResult( Sources.URL_ÞINGMENN, ImportÞingmenn.Result.class ) );
 		importNefndarmenn( XMLUtil.urlToResult( Sources.URL_NEFNDARMENN, ImportNefndarmenn.Result.class ) );
 
-		List<Committee> list = ObjectSelect
-				.query( Committee.class )
+		List<CommitteeMembership> list = ObjectSelect
+				.query( CommitteeMembership.class )
 				.select( Core.newContext() );
 
-		for( Committee party : list ) {
-			System.out.println( party.getName() );
+		for( CommitteeMembership o : list ) {
+			System.out.println( o.getPerson().getName() + " : " + o.getCommittee().getName() + " : " + o.getDateFrom() + " : " + o.getDateTo() );
 		}
 	}
 
@@ -37,6 +38,7 @@ public class Main {
 
 		result.þingmenn.forEach( in -> {
 			Person p = oc.newObject( Person.class );
+			p.setOriginalID( in.id );
 			p.setName( in.nafn );
 			p.setBirthDate( in.fæðingardagur );
 		} );
@@ -47,10 +49,14 @@ public class Main {
 	private static void importNefndarmenn( ImportNefndarmenn.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.nefndir.forEach( in -> {
-			System.out.println( in.heiti );
-			in.nefndarmenn.forEach( p -> {
-
+		result.nefndir.forEach( nefnd -> {
+			nefnd.nefndarmenn.forEach( nefndarmaður -> {
+				CommitteeMembership cm = oc.newObject( CommitteeMembership.class );
+				cm.setPerson( ObjectSelect.query( Person.class ).where( Person.ORIGINAL_ID.eq( nefndarmaður.id ) ).selectOne( oc ) );
+				cm.setCommittee( ObjectSelect.query( Committee.class ).where( Committee.ORIGINAL_ID.eq( nefnd.id ) ).selectOne( oc ) );
+				cm.setStatus( nefndarmaður.staða );
+				cm.setDateFrom( nefndarmaður.nefndasetahófst );
+				cm.setDateTo( nefndarmaður.nefndasetulauk );
 			} );
 		} );
 

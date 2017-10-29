@@ -22,7 +22,7 @@ public class ImportÞingmenn {
 		public static class Þingmaður {
 
 			@XmlAttribute
-			public String id;
+			public Long id;
 
 			public String nafn;
 
