@@ -37,5 +37,4 @@ public class XMLUtil {
 			throw new RuntimeException( e );
 		}
 	}
-
 }
