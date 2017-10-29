@@ -1,27 +1,21 @@
 package althingi.xml;
 
-import java.io.IOException;
-
-import org.apache.http.client.fluent.Request;
+import althingi.data.Party;
+import althingi.db.Core;
 
 public class Main {
 
 	public static void main( String[] args ) {
-		try {
-			String xmlString = Request
-					.Get( Sources.URL_ÞINGFLOKKAR )
-					.execute()
-					.returnContent()
-					.asString();
+		Party p = Core.newContext().newObject( Party.class );
+		p.setName( "Smu" );
+		p.getObjectContext().commitChanges();
 
-			ImportÞingflokkar.Þingflokkar result = XMLUtil.unmarshal( xmlString, ImportÞingflokkar.Þingflokkar.class );
+		/*
+		ImportÞingflokkar.Þingflokkar result = XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Þingflokkar.class );
 
-			result.þingflokkar.forEach( þingflokkur -> {
-				System.out.println( þingflokkur );
-			} );
-		}
-		catch( IOException e ) {
-			throw new RuntimeException( e );
-		}
+		result.þingflokkar.forEach( þingflokkur -> {
+			System.out.println( þingflokkur );
+		} );
+		*/
 	}
 }

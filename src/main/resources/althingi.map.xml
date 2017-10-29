@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/10/modelMap"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://cayenne.apache.org/schema/10/modelMap http://cayenne.apache.org/schema/10/modelMap.xsd"
+	 project-version="10">
+	<property name="defaultPackage" value="althingi.data"/>
+	<db-entity name="party">
+		<db-attribute name="creation_date" type="TIMESTAMP"/>
+		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="modification_date" type="TIMESTAMP"/>
+		<db-attribute name="name" type="CLOB"/>
+		<db-attribute name="unique_id" type="CLOB"/>
+	</db-entity>
+	<obj-entity name="Party" className="althingi.data.Party" dbEntityName="party">
+		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
+		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="uniqueId" type="java.lang.String" db-attribute-path="unique_id"/>
+	</obj-entity>
+</data-map>
