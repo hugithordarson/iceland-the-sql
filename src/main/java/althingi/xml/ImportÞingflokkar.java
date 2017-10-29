@@ -20,7 +20,7 @@ public class ImportÞingflokkar {
 		public static class Þingflokkur {
 
 			@XmlAttribute
-			public String id;
+			public long id;
 
 			@XmlJavaTypeAdapter( value = StringTrimAdapter.class, type = String.class )
 			public String heiti;
@@ -44,8 +44,8 @@ public class ImportÞingflokkar {
 		}
 
 		public static class Tímabil {
-			public int fyrstaþing;
-			public int síðastaþing;
+			public long fyrstaþing;
+			public long síðastaþing;
 
 			@Override
 			public String toString() {

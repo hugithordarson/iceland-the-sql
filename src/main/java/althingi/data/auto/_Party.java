@@ -20,16 +20,46 @@ public abstract class _Party extends BaseDataObject {
 
     public static final String ID_PK_COLUMN = "id";
 
+    public static final Property<String> ABBREVIATION_LONG = Property.create("abbreviationLong", String.class);
+    public static final Property<String> ABBREVIATION_SHORT = Property.create("abbreviationShort", String.class);
     public static final Property<LocalDateTime> CREATION_DATE = Property.create("creationDate", LocalDateTime.class);
+    public static final Property<Long> FIRST_PARLIAMENT_NUMBER = Property.create("firstParliamentNumber", Long.class);
+    public static final Property<Long> LAST_PARLIAMENT_NUMBER = Property.create("lastParliamentNumber", Long.class);
     public static final Property<LocalDateTime> MODIFICATION_DATE = Property.create("modificationDate", LocalDateTime.class);
     public static final Property<String> NAME = Property.create("name", String.class);
+    public static final Property<Long> ORIGINAL_ID = Property.create("originalID", Long.class);
     public static final Property<String> UNIQUE_ID = Property.create("uniqueId", String.class);
 
+    protected String abbreviationLong;
+    protected String abbreviationShort;
     protected LocalDateTime creationDate;
+    protected Long firstParliamentNumber;
+    protected Long lastParliamentNumber;
     protected LocalDateTime modificationDate;
     protected String name;
+    protected Long originalID;
     protected String uniqueId;
 
+
+    public void setAbbreviationLong(String abbreviationLong) {
+        beforePropertyWrite("abbreviationLong", this.abbreviationLong, abbreviationLong);
+        this.abbreviationLong = abbreviationLong;
+    }
+
+    public String getAbbreviationLong() {
+        beforePropertyRead("abbreviationLong");
+        return this.abbreviationLong;
+    }
+
+    public void setAbbreviationShort(String abbreviationShort) {
+        beforePropertyWrite("abbreviationShort", this.abbreviationShort, abbreviationShort);
+        this.abbreviationShort = abbreviationShort;
+    }
+
+    public String getAbbreviationShort() {
+        beforePropertyRead("abbreviationShort");
+        return this.abbreviationShort;
+    }
 
     public void setCreationDate(LocalDateTime creationDate) {
         beforePropertyWrite("creationDate", this.creationDate, creationDate);
@@ -39,6 +69,26 @@ public abstract class _Party extends BaseDataObject {
     public LocalDateTime getCreationDate() {
         beforePropertyRead("creationDate");
         return this.creationDate;
+    }
+
+    public void setFirstParliamentNumber(Long firstParliamentNumber) {
+        beforePropertyWrite("firstParliamentNumber", this.firstParliamentNumber, firstParliamentNumber);
+        this.firstParliamentNumber = firstParliamentNumber;
+    }
+
+    public Long getFirstParliamentNumber() {
+        beforePropertyRead("firstParliamentNumber");
+        return this.firstParliamentNumber;
+    }
+
+    public void setLastParliamentNumber(Long lastParliamentNumber) {
+        beforePropertyWrite("lastParliamentNumber", this.lastParliamentNumber, lastParliamentNumber);
+        this.lastParliamentNumber = lastParliamentNumber;
+    }
+
+    public Long getLastParliamentNumber() {
+        beforePropertyRead("lastParliamentNumber");
+        return this.lastParliamentNumber;
     }
 
     public void setModificationDate(LocalDateTime modificationDate) {
@@ -61,6 +111,16 @@ public abstract class _Party extends BaseDataObject {
         return this.name;
     }
 
+    public void setOriginalID(Long originalID) {
+        beforePropertyWrite("originalID", this.originalID, originalID);
+        this.originalID = originalID;
+    }
+
+    public Long getOriginalID() {
+        beforePropertyRead("originalID");
+        return this.originalID;
+    }
+
     public void setUniqueId(String uniqueId) {
         beforePropertyWrite("uniqueId", this.uniqueId, uniqueId);
         this.uniqueId = uniqueId;
@@ -78,12 +138,22 @@ public abstract class _Party extends BaseDataObject {
         }
 
         switch(propName) {
+            case "abbreviationLong":
+                return this.abbreviationLong;
+            case "abbreviationShort":
+                return this.abbreviationShort;
             case "creationDate":
                 return this.creationDate;
+            case "firstParliamentNumber":
+                return this.firstParliamentNumber;
+            case "lastParliamentNumber":
+                return this.lastParliamentNumber;
             case "modificationDate":
                 return this.modificationDate;
             case "name":
                 return this.name;
+            case "originalID":
+                return this.originalID;
             case "uniqueId":
                 return this.uniqueId;
             default:
@@ -98,14 +168,29 @@ public abstract class _Party extends BaseDataObject {
         }
 
         switch (propName) {
+            case "abbreviationLong":
+                this.abbreviationLong = (String)val;
+                break;
+            case "abbreviationShort":
+                this.abbreviationShort = (String)val;
+                break;
             case "creationDate":
                 this.creationDate = (LocalDateTime)val;
+                break;
+            case "firstParliamentNumber":
+                this.firstParliamentNumber = (Long)val;
+                break;
+            case "lastParliamentNumber":
+                this.lastParliamentNumber = (Long)val;
                 break;
             case "modificationDate":
                 this.modificationDate = (LocalDateTime)val;
                 break;
             case "name":
                 this.name = (String)val;
+                break;
+            case "originalID":
+                this.originalID = (Long)val;
                 break;
             case "uniqueId":
                 this.uniqueId = (String)val;
@@ -126,18 +211,28 @@ public abstract class _Party extends BaseDataObject {
     @Override
     protected void writeState(ObjectOutputStream out) throws IOException {
         super.writeState(out);
+        out.writeObject(this.abbreviationLong);
+        out.writeObject(this.abbreviationShort);
         out.writeObject(this.creationDate);
+        out.writeObject(this.firstParliamentNumber);
+        out.writeObject(this.lastParliamentNumber);
         out.writeObject(this.modificationDate);
         out.writeObject(this.name);
+        out.writeObject(this.originalID);
         out.writeObject(this.uniqueId);
     }
 
     @Override
     protected void readState(ObjectInputStream in) throws IOException, ClassNotFoundException {
         super.readState(in);
+        this.abbreviationLong = (String)in.readObject();
+        this.abbreviationShort = (String)in.readObject();
         this.creationDate = (LocalDateTime)in.readObject();
+        this.firstParliamentNumber = (Long)in.readObject();
+        this.lastParliamentNumber = (Long)in.readObject();
         this.modificationDate = (LocalDateTime)in.readObject();
         this.name = (String)in.readObject();
+        this.originalID = (Long)in.readObject();
         this.uniqueId = (String)in.readObject();
     }
 
