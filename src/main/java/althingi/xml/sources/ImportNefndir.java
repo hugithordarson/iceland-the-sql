@@ -10,15 +10,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import althingi.xml.StringTrimAdapter;
 
-public class ImportÞingflokkar {
+public class ImportNefndir {
 
-	@XmlRootElement( name = "þingflokkar" )
+	@XmlRootElement( name = "nefndir" )
 	public static class Result {
 
-		@XmlElement( name = "þingflokkur" )
-		public List<Þingflokkur> þingflokkar = new ArrayList<>();
+		@XmlElement( name = "nefnd" )
+		public List<Nefnd> nefndir = new ArrayList<>();
 
-		public static class Þingflokkur {
+		public static class Nefnd {
 
 			@XmlAttribute
 			public long id;

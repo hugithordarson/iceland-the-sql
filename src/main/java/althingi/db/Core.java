@@ -6,28 +6,28 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.configuration.DataNodeDescriptor;
 import org.apache.cayenne.configuration.server.DataSourceFactory;
 import org.apache.cayenne.configuration.server.ServerRuntime;
-import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class Core {
 
-	private static ServerRuntime _runtime;
+	private static ServerRuntime _serverRuntime;
 
-	public static ServerRuntime runtime() {
-		if( _runtime == null ) {
-			ServerRuntimeBuilder b = ServerRuntime.builder();
-			b = b.addConfigs( "cayenne-althingi.xml" );
-			b = b.addModule( binder -> binder.bind( DataSourceFactory.class ).to( ProjectDataSourceFactory.class ) );
-			_runtime = b.build();
+	private static ServerRuntime serverRuntime() {
+		if( _serverRuntime == null ) {
+			_serverRuntime = ServerRuntime
+					.builder()
+					.addConfigs( "cayenne-althingi.xml" )
+					.addModule( binder -> binder.bind( DataSourceFactory.class ).to( ProjectDataSourceFactory.class ) )
+					.build();
 		}
 
-		return _runtime;
+		return _serverRuntime;
 	}
 
 	public static ObjectContext newContext() {
-		return runtime().newContext();
+		return serverRuntime().newContext();
 	}
 
 	public static class ProjectDataSourceFactory implements DataSourceFactory {

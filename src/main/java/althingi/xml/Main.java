@@ -5,36 +5,57 @@ import java.util.List;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.ObjectSelect;
 
+import althingi.data.Committee;
 import althingi.data.Party;
 import althingi.db.Core;
+import althingi.xml.sources.ImportNefndir;
 import althingi.xml.sources.ImportÞingflokkar;
 
 public class Main {
 
 	public static void main( String[] args ) {
 
-		ImportÞingflokkar.Þingflokkar result = XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Þingflokkar.class );
+		importÞingflokkar( XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Result.class ) );
+		importNefndir( XMLUtil.urlToResult( Sources.URL_NEFNDIR, ImportNefndir.Result.class ) );
 
+		List<Committee> list = ObjectSelect
+				.query( Committee.class )
+				.select( Core.newContext() );
+
+		for( Committee party : list ) {
+			System.out.println( party.getName() );
+		}
+	}
+
+	private static void importÞingflokkar( ImportÞingflokkar.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.þingflokkar.forEach( þingflokkur -> {
+		result.þingflokkar.forEach( fromXML -> {
 			Party p = oc.newObject( Party.class );
-			p.setOriginalID( þingflokkur.id );
-			p.setName( þingflokkur.heiti );
-			p.setAbbreviationLong( þingflokkur.skammstafanir.löngskammstöfun );
-			p.setAbbreviationShort( þingflokkur.skammstafanir.stuttskammstöfun );
-			p.setFirstParliamentNumber( þingflokkur.tímabil.fyrstaþing );
-			p.setLastParliamentNumber( þingflokkur.tímabil.síðastaþing );
+			p.setOriginalID( fromXML.id );
+			p.setName( fromXML.heiti );
+			p.setAbbreviationLong( fromXML.skammstafanir.löngskammstöfun );
+			p.setAbbreviationShort( fromXML.skammstafanir.stuttskammstöfun );
+			p.setFirstParliamentNumber( fromXML.tímabil.fyrstaþing );
+			p.setLastParliamentNumber( fromXML.tímabil.síðastaþing );
 		} );
 
 		oc.commitChanges();
+	}
 
-		List<Party> list = ObjectSelect
-				.query( Party.class )
-				.select( Core.newContext() );
+	private static void importNefndir( ImportNefndir.Result result ) {
+		ObjectContext oc = Core.newContext();
 
-		for( Party party : list ) {
-			System.out.println( party.getName() );
-		}
+		result.nefndir.forEach( fromXML -> {
+			Committee p = oc.newObject( Committee.class );
+			p.setOriginalID( fromXML.id );
+			p.setName( fromXML.heiti );
+			p.setAbbreviationLong( fromXML.skammstafanir.löngskammstöfun );
+			p.setAbbreviationShort( fromXML.skammstafanir.stuttskammstöfun );
+			p.setFirstParliamentNumber( fromXML.tímabil.fyrstaþing );
+			p.setLastParliamentNumber( fromXML.tímabil.síðastaþing );
+		} );
+
+		oc.commitChanges();
 	}
 }
