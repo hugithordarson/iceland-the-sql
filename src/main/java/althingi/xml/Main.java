@@ -11,6 +11,7 @@ import althingi.db.Core;
 import althingi.xml.sources.ImportNefndarmenn;
 import althingi.xml.sources.ImportNefndir;
 import althingi.xml.sources.ImportÞingflokkar;
+import althingi.xml.sources.ImportÞingmenn;
 
 public class Main {
 
@@ -18,7 +19,8 @@ public class Main {
 
 		// importÞingflokkar( XMLUtil.urlToResult( Sources.URL_ÞINGFLOKKAR, ImportÞingflokkar.Result.class ) );
 		// importNefndir( XMLUtil.urlToResult( Sources.URL_NEFNDIR, ImportNefndir.Result.class ) );
-		importNefndarmenn( XMLUtil.urlToResult( Sources.URL_NEFNDARMENN, ImportNefndarmenn.Result.class ) );
+		// importNefndarmenn( XMLUtil.urlToResult( Sources.URL_NEFNDARMENN, ImportNefndarmenn.Result.class ) );
+		importÞingmenn( XMLUtil.urlToResult( Sources.URL_ÞINGMENN, ImportÞingmenn.Result.class ) );
 
 		List<Committee> list = ObjectSelect
 				.query( Committee.class )
@@ -27,6 +29,16 @@ public class Main {
 		for( Committee party : list ) {
 			System.out.println( party.getName() );
 		}
+	}
+
+	private static void importÞingmenn( ImportÞingmenn.Result result ) {
+		ObjectContext oc = Core.newContext();
+
+		result.þingmenn.forEach( fromXML -> {
+			System.out.println( fromXML.nafn );
+		} );
+
+		oc.commitChanges();
 	}
 
 	private static void importNefndarmenn( ImportNefndarmenn.Result result ) {
