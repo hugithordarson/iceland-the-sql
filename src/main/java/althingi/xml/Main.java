@@ -7,6 +7,7 @@ import org.apache.cayenne.query.ObjectSelect;
 
 import althingi.data.Committee;
 import althingi.data.Party;
+import althingi.data.Person;
 import althingi.db.Core;
 import althingi.xml.sources.ImportNefndarmenn;
 import althingi.xml.sources.ImportNefndir;
@@ -34,8 +35,10 @@ public class Main {
 	private static void importÞingmenn( ImportÞingmenn.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.þingmenn.forEach( fromXML -> {
-			System.out.println( fromXML.nafn );
+		result.þingmenn.forEach( in -> {
+			Person p = oc.newObject( Person.class );
+			p.setName( in.nafn );
+			p.setBirthDate( in.fæðingardagur );
 		} );
 
 		oc.commitChanges();
@@ -44,9 +47,9 @@ public class Main {
 	private static void importNefndarmenn( ImportNefndarmenn.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.nefndir.forEach( fromXML -> {
-			System.out.println( fromXML.heiti );
-			fromXML.nefndarmenn.forEach( p -> {
+		result.nefndir.forEach( in -> {
+			System.out.println( in.heiti );
+			in.nefndarmenn.forEach( p -> {
 				System.out.println( " - " + p.nafn );
 			} );
 		} );
@@ -57,14 +60,14 @@ public class Main {
 	private static void importÞingflokkar( ImportÞingflokkar.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.þingflokkar.forEach( fromXML -> {
+		result.þingflokkar.forEach( in -> {
 			Party p = oc.newObject( Party.class );
-			p.setOriginalID( fromXML.id );
-			p.setName( fromXML.heiti );
-			p.setAbbreviationLong( fromXML.skammstafanir.löngskammstöfun );
-			p.setAbbreviationShort( fromXML.skammstafanir.stuttskammstöfun );
-			p.setFirstParliamentNumber( fromXML.tímabil.fyrstaþing );
-			p.setLastParliamentNumber( fromXML.tímabil.síðastaþing );
+			p.setOriginalID( in.id );
+			p.setName( in.heiti );
+			p.setAbbreviationLong( in.skammstafanir.löngskammstöfun );
+			p.setAbbreviationShort( in.skammstafanir.stuttskammstöfun );
+			p.setFirstParliamentNumber( in.tímabil.fyrstaþing );
+			p.setLastParliamentNumber( in.tímabil.síðastaþing );
 		} );
 
 		oc.commitChanges();
@@ -73,14 +76,14 @@ public class Main {
 	private static void importNefndir( ImportNefndir.Result result ) {
 		ObjectContext oc = Core.newContext();
 
-		result.nefndir.forEach( fromXML -> {
+		result.nefndir.forEach( in -> {
 			Committee p = oc.newObject( Committee.class );
-			p.setOriginalID( fromXML.id );
-			p.setName( fromXML.heiti );
-			p.setAbbreviationLong( fromXML.skammstafanir.löngskammstöfun );
-			p.setAbbreviationShort( fromXML.skammstafanir.stuttskammstöfun );
-			p.setFirstParliamentNumber( fromXML.tímabil.fyrstaþing );
-			p.setLastParliamentNumber( fromXML.tímabil.síðastaþing );
+			p.setOriginalID( in.id );
+			p.setName( in.heiti );
+			p.setAbbreviationLong( in.skammstafanir.löngskammstöfun );
+			p.setAbbreviationShort( in.skammstafanir.stuttskammstöfun );
+			p.setFirstParliamentNumber( in.tímabil.fyrstaþing );
+			p.setLastParliamentNumber( in.tímabil.síðastaþing );
 		} );
 
 		oc.commitChanges();

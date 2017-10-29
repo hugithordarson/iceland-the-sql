@@ -28,6 +28,14 @@
 		<db-attribute name="original_id" type="BIGINT"/>
 		<db-attribute name="unique_id" type="CLOB"/>
 	</db-entity>
+	<db-entity name="person">
+		<db-attribute name="birth_date" type="DATE"/>
+		<db-attribute name="creation_date" type="TIMESTAMP"/>
+		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="modification_date" type="TIMESTAMP"/>
+		<db-attribute name="name" type="CLOB"/>
+		<db-attribute name="unique_id" type="CLOB"/>
+	</db-entity>
 	<obj-entity name="Committee" className="althingi.data.Committee" dbEntityName="committee">
 		<obj-attribute name="abbreviationLong" type="java.lang.String" db-attribute-path="abbreviation_long"/>
 		<obj-attribute name="abbreviationShort" type="java.lang.String" db-attribute-path="abbreviation_short"/>
@@ -49,5 +57,12 @@
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
 		<obj-attribute name="originalID" type="java.lang.Long" db-attribute-path="original_id"/>
 		<obj-attribute name="uniqueId" type="java.lang.String" db-attribute-path="unique_id"/>
+	</obj-entity>
+	<obj-entity name="Person" className="althingi.data.Person" dbEntityName="person">
+		<obj-attribute name="birthDate" type="java.time.LocalDate" db-attribute-path="birth_date"/>
+		<obj-attribute name="creationDate" type="java.time.LocalDateTime" db-attribute-path="creation_date"/>
+		<obj-attribute name="modificationDate" type="java.time.LocalDateTime" db-attribute-path="modification_date"/>
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="uniqueID" type="java.lang.String" db-attribute-path="unique_id"/>
 	</obj-entity>
 </data-map>
