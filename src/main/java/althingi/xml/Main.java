@@ -7,6 +7,7 @@ import org.apache.cayenne.query.ObjectSelect;
 
 import althingi.data.Party;
 import althingi.db.Core;
+import althingi.xml.sources.ImportÞingflokkar;
 
 public class Main {
 
