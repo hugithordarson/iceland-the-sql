@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.http.client.fluent.Request;
 import org.xml.sax.InputSource;
 
-public class ATClient {
+public class ImportÞingflokkar {
 
 	private static final String URL_ÞINGFLOKKAR = "https://www.althingi.is/altext/xml/thingflokkar/";
 	private static final String URL_ÞINGMENN = "https://www.althingi.is/altext/xml/thingmenn/";
