@@ -1,4 +1,4 @@
-package althingi.xml;
+package althingi.xml.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
