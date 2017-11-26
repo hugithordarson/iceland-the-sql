@@ -29,7 +29,7 @@ public class Main {
 				.select( Core.newContext() );
 
 		for( CommitteeMembership o : list ) {
-			System.out.println( o.getPerson().getName() + " : " + o.getCommittee().getName() + " : " + o.getDateFrom() + " : " + o.getDateTo() );
+			System.out.println( o.getPerson().getName() + " : " + o.getCommittee().getName() + " : " + o.getStatus() + " : " + o.getDateFrom() + " : " + o.getDateTo() );
 		}
 	}
 
