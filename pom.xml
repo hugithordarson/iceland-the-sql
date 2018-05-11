@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>is.godurkodi</groupId>
-	<artifactId>althingi</artifactId>
+	<artifactId>iceland-the-sql</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>althingi</name>
+	<name>iceland-the-sql</name>
 
 	<properties>
 		<cayenne.version>4.1.M1</cayenne.version>
