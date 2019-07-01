@@ -7,7 +7,7 @@
 	<name>iceland-the-sql</name>
 
 	<properties>
-		<cayenne.version>4.1.M3-SNAPSHOT</cayenne.version>
+		<cayenne.version>4.1.B3-SNAPSHOT</cayenne.version>
 	</properties>
 
 	<build>
